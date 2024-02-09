@@ -1,0 +1,21 @@
+{% extends 'my_app/base.html' %}
+{% block content %}
+    <div class="col-12">
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            <div class="col-6">
+                <div class="card">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p>
+                            Хотите удалить пост "{{ object.title }}"?
+                        </p>
+                        <button type="submit" class="btn btn-success">
+                            Подтвердить
+                        </button>
+                        <a href="{% url 'my_app:list' %}" class="btn btn-warning">Отмена</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
