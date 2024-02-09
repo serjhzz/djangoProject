@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 <head>
-    <script src="../assets/js/color-modes.js"></script>
+    <script src="{% static 'assets/js/color-modes.js' %}"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -178,14 +178,7 @@
                         background context. Make it a few sentences long so folks can pick up some informative tidbits.
                         Then, link them off to some social networking sites or contact information.</p>
                 </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4>Contact</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                        <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
-                    </ul>
-                </div>
+               {% include 'my_app/includes/inc_main_menu.html' %}
             </div>
         </div>
     </div>
@@ -240,7 +233,7 @@
             <a href="#">Back to top</a>
         </p>
         <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
+        <p class="mb-0">New to Bootstrap? <a href="/static">Visit the homepage</a> or read our <a
                 href="../getting-started/introduction/">getting started guide</a>.</p>
     </div>
 </footer>
