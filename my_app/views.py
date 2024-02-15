@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -6,7 +7,7 @@ from my_app.forms import PostForm
 from my_app.models import Post
 
 
-class PostView(ListView):
+class PostView(LoginRequiredMixin, ListView):
     model = Post
 
     def get_queryset(self, *args, **kwargs):
@@ -15,9 +16,10 @@ class PostView(ListView):
         return queryset
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
+    permission_required = 'my_app.add_post'
     success_url = reverse_lazy('my_app:list')
 
     def form_valid(self, form):
@@ -28,7 +30,7 @@ class PostCreateView(CreateView):
         return super().form_valid(form)
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
     def get_object(self, queryset=None):
@@ -38,15 +40,17 @@ class PostDetailView(DetailView):
         return self.object
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
+    permission_required = 'my_app:change_post'
     # success_url = reverse_lazy('my_app:list')
 
     def get_success_url(self):
         return reverse('my_app:view', kwargs={'pk': self.object.pk})
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Post
+    permission_required = 'my_app:delete_post'
     success_url = reverse_lazy('my_app:list')
