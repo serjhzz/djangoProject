@@ -16,7 +16,7 @@ class LoginView(BaseLoginView):
 
 
 class LogoutView(BaseLogoutView):
-    template_name = 'users/login.html'
+    pass
 
 
 class RegisterView(CreateView):
