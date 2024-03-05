@@ -10,7 +10,8 @@
             <div class="col-sm-4 offset-md-1 py-4">
                 <h4>Меню</h4>
                 <ul class="list-unstyled">
-                    <li><a href="{% url 'my_app:list' %}" class="text-white">Главная</a></li>
+                    <li><a href="{% url 'my_app:home' %}" class="text-white">Главная</a></li>
+                    <li><a href="{% url 'my_app:list' %}" class="text-white">Мои публикации</a></li>
                     <li><a href="{% url 'my_app:create' %}" class="text-white">Создать пост</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'users:profile' %}" class="text-white">Профиль</a></li>
