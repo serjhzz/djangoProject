@@ -42,7 +42,6 @@ class PostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         self.object = form.save()
         self.object.owner = self.request.user
         self.object.save()
-
         return super().form_valid(form)
 
 
