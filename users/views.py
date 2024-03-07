@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as BaseLoginView
@@ -32,7 +33,8 @@ class RegisterView(CreateView):
         new_user = form.save()
         send_mail(
             subject='Welcome to TetraGram!',
-            message=f'Вы зарегистрировались на нашей платформе! Добро пожаловать {new_user.username}!',
+            message=f'Вы зарегистрировались на нашей платформе! Добро пожаловать {new_user.username}!'
+                    f'Для окончания регистрации перейдите по ссылке: http://127/0/0/1:8000{new_user.id}',
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[new_user.email]
         )
@@ -59,3 +61,11 @@ def generate_new_password(request):
     request.user.set_password(new_password)
     request.user.save()
     return redirect(reverse('my_app:index'))
+
+
+def verify_new_user(request, id):
+    User = get_user_model()
+    user = User.objects.get(pk=id)
+    user.is_active = True
+    user.save()
+    return redirect('users:profile')
