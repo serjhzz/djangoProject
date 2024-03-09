@@ -4,6 +4,7 @@ import string
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
 from django.contrib.auth.forms import AuthenticationForm
@@ -62,6 +63,8 @@ class VerifyEmailView(View):
         try:
             user = User.objects.get(email_verification_token=token)
             user.email_verified = True
+            authors = Group.objects.get(name="authors")
+            user.groups.set([authors])
             user.save()
             return redirect('users:login')
         except User.DoesNotExist:
